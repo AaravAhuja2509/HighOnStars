@@ -19,10 +19,10 @@ let stars = [];
 let musicEnabled = true;
 let backgroundMusic;
 
-// Music and sound functions
+// sound
 function createSpaceMusic() {
     try {
-        // Use your theme.wav file
+    
         const musicUrl = 'theme.wav';
 
         backgroundMusic = {
@@ -31,16 +31,13 @@ function createSpaceMusic() {
             init: function (url) {
                 this.audio = new Audio(url);
                 this.audio.loop = true;
-                this.audio.volume = 0.3; // Adjust volume as needed
+                this.audio.volume = 0.3; 
                 this.audio.preload = 'auto';
-
-                // Handle loading errors gracefully
+                
                 this.audio.addEventListener('error', (e) => {
                     console.log('Could not load music file, using fallback');
                     createSynthesizedMusic();
                 });
-
-                // Log when music is ready
                 this.audio.addEventListener('canplaythrough', () => {
                     console.log('Music loaded successfully!');
                 });
@@ -52,7 +49,6 @@ function createSpaceMusic() {
                 this.audio.currentTime = 0;
                 this.audio.play().catch(error => {
                     console.log('Could not play music:', error);
-                    // Fallback to synthesized music if file doesn't work
                     createSynthesizedMusic();
                     if (backgroundMusic.start) backgroundMusic.start();
                 });
@@ -80,8 +76,6 @@ function createSpaceMusic() {
                 }
             }
         };
-
-        // Initialize with your theme.wav file
         backgroundMusic.init(musicUrl);
 
     } catch (error) {
@@ -91,7 +85,7 @@ function createSpaceMusic() {
 }
 
 function createSynthesizedMusic() {
-    // Fallback synthesized music if theme.wav doesn't load
+
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -133,7 +127,7 @@ function createSynthesizedMusic() {
                 musicEnabled = true;
                 if (gameRunning) playSpaceTheme();
             },
-            setVolume: () => { } // No-op for synthesized music
+            setVolume: () => { } 
         };
 
     } catch (error) {
@@ -178,7 +172,7 @@ function playCollectSound() {
         oscillator.start();
         oscillator.stop(audioContext.currentTime + 0.1);
     } catch (error) {
-        // Silently fail if audio isn't available
+     
     }
 }
 
@@ -203,26 +197,25 @@ function playTeleportSound() {
         oscillator.start();
         oscillator.stop(audioContext.currentTime + 0.5);
     } catch (error) {
-        // Silently fail if audio isn't available
+        
     }
 }
 function createRocket(scene) {
     const graphics = scene.add.graphics();
 
-    // Rocket body (blue-gray)
+
     graphics.fillStyle(0x4a90e2);
     graphics.fillTriangle(12, 0, 8, 20, 16, 20);
 
-    // Rocket fins
+
     graphics.fillStyle(0x2c5282);
     graphics.fillTriangle(6, 15, 8, 20, 10, 18);
     graphics.fillTriangle(18, 15, 16, 20, 14, 18);
 
-    // Rocket window
+
     graphics.fillStyle(0x87ceeb);
     graphics.fillCircle(12, 8, 3);
 
-    // Rocket flames (orange/red)
     graphics.fillStyle(0xff4500);
     graphics.fillTriangle(10, 20, 14, 20, 12, 26);
     graphics.fillStyle(0xffd700);
@@ -235,14 +228,14 @@ function createRocket(scene) {
 function createStar(scene, color, name) {
     const graphics = scene.add.graphics();
 
-    // Draw outer glow first
+   
     graphics.fillStyle(color, 0.3);
     graphics.fillCircle(25, 25, 24);
 
-    // Draw main star body
+   
     graphics.fillStyle(color, 1.0);
 
-    // Draw 5-pointed star using triangles for better visibility
+    
     const centerX = 25;
     const centerY = 25;
     const outerRadius = 18;
@@ -264,7 +257,7 @@ function createStar(scene, color, name) {
         graphics.fillTriangle(centerX, centerY, x2, y2, x3, y3);
     }
 
-    // Add bright center
+    
     graphics.fillStyle(0xffffff, 0.8);
     graphics.fillCircle(centerX, centerY, 4);
 
@@ -275,11 +268,11 @@ function createStar(scene, color, name) {
 function createBlackHole(scene) {
     const graphics = scene.add.graphics();
 
-    // Outer distortion field
+    
     graphics.fillGradientStyle(0x8a2be2, 0x4b0082, 0x2c1810, 0x000000, 1);
     graphics.fillCircle(25, 25, 22);
 
-    // Multiple accretion disk layers
+ 
     graphics.lineStyle(3, 0xff6b35, 0.8);
     graphics.strokeCircle(25, 25, 20);
     graphics.lineStyle(2, 0xff9500, 0.7);
@@ -288,16 +281,11 @@ function createBlackHole(scene) {
     graphics.strokeCircle(25, 25, 14);
     graphics.lineStyle(1, 0xda70d6, 0.5);
     graphics.strokeCircle(25, 25, 11);
-
-    // Event horizon
     graphics.fillGradientStyle(0x4b0082, 0x1a0033, 0x000000, 0x000000, 1);
     graphics.fillCircle(25, 25, 15);
-
-    // Inner black core with slight purple tint
     graphics.fillStyle(0x0a0008);
     graphics.fillCircle(25, 25, 8);
 
-    // Hawking radiation effect
     for (let i = 0; i < 8; i++) {
         const angle = (i / 8) * Math.PI * 2;
         const x = 25 + Math.cos(angle) * 18;
@@ -313,20 +301,16 @@ function createBlackHole(scene) {
 function createAlien(scene) {
     const graphics = scene.add.graphics();
 
-    // Alien body (green)
     graphics.fillStyle(0x32cd32);
     graphics.fillEllipse(15, 20, 20, 15);
 
-    // Alien head
     graphics.fillStyle(0x228b22);
     graphics.fillEllipse(15, 8, 15, 12);
 
-    // Eyes
     graphics.fillStyle(0xff0000);
     graphics.fillCircle(12, 8, 2);
     graphics.fillCircle(18, 8, 2);
 
-    // Antennae
     graphics.lineStyle(2, 0x228b22);
     graphics.lineBetween(10, 4, 8, 0);
     graphics.lineBetween(20, 4, 22, 0);
@@ -338,16 +322,16 @@ function createAlien(scene) {
     graphics.destroy();
 }
 
-// Fixed starfield functions
+
 function createStarfield() {
     stars = [];
     for (let i = 0; i < 150; i++) {
-        // Create different types of stars for variety
+        
         const starType = Math.random();
         let star;
 
         if (starType < 0.7) {
-            // Regular white stars
+    
             star = gameScene.add.circle(
                 Phaser.Math.Between(0, 800),
                 Phaser.Math.Between(0, 600),
@@ -357,7 +341,7 @@ function createStarfield() {
             );
             star.speed = Phaser.Math.FloatBetween(0.3, 1.5);
         } else if (starType < 0.85) {
-            // Bright blue stars
+           
             star = gameScene.add.circle(
                 Phaser.Math.Between(0, 800),
                 Phaser.Math.Between(0, 600),
@@ -367,7 +351,7 @@ function createStarfield() {
             );
             star.speed = Phaser.Math.FloatBetween(0.5, 2);
         } else {
-            // Golden stars
+      
             star = gameScene.add.circle(
                 Phaser.Math.Between(0, 800),
                 Phaser.Math.Between(0, 600),
@@ -378,7 +362,7 @@ function createStarfield() {
             star.speed = Phaser.Math.FloatBetween(0.2, 1);
         }
 
-        // Set depth to ensure stars appear behind game objects
+   
         star.setDepth(-1);
         star.twinkleTimer = Math.random() * 100;
         stars.push(star);
@@ -391,14 +375,14 @@ function animateStarfield() {
     stars.forEach((star, index) => {
         if (!star || !star.active) return;
 
-        // Move stars downward
+    
         star.y += star.speed;
         if (star.y > 620) {
             star.y = -20;
             star.x = Phaser.Math.Between(0, 800);
         }
 
-        // Enhanced twinkling effect
+       
         star.twinkleTimer += 0.5;
         if (star.twinkleTimer > 100) {
             star.twinkleTimer = 0;
@@ -414,7 +398,6 @@ function animateStarfield() {
     });
 }
 
-// Start screen function
 function showStartScreen() {
     gameScene.cameras.main.setBackgroundColor('#000022');
 
@@ -445,14 +428,12 @@ function showStartScreen() {
         fontFamily: 'Courier New'
     }).setOrigin(0.5).setDepth(10);
 
-    // Music toggle instruction
     const musicText = gameScene.add.text(400, 480, 'Press M to toggle music', {
         fontSize: '16px',
         fill: '#888888',
         fontFamily: 'Courier New'
     }).setOrigin(0.5).setDepth(10);
-
-    // Pulsing effect on start text
+t
     gameScene.tweens.add({
         targets: startText,
         alpha: 0.3,
@@ -461,19 +442,16 @@ function showStartScreen() {
         repeat: -1
     });
 
-    // Initialize music system
+  
     createSpaceMusic();
 
-    // Fixed space key handling
     const spaceKey = gameScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     spaceKey.once('down', () => {
         gameStarted = true;
-        // Start music when game begins
         backgroundMusic.start();
         gameScene.scene.restart();
     });
 
-    // Music toggle key
     const mKey = gameScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
     mKey.on('down', () => {
         const enabled = toggleMusic();
@@ -482,9 +460,8 @@ function showStartScreen() {
     });
 }
 
-// Phaser scene functions
 function preload() {
-    // Create space-themed sprites
+
     createRocket(this);
     createStar(this, 0x0099ff, 'blue_star');
     createStar(this, 0x00cc00, 'green_star');
@@ -498,7 +475,6 @@ function preload() {
 function create() {
     gameScene = this;
 
-    // Create starfield background first
     createStarfield();
 
     if (!gameStarted) {
@@ -506,15 +482,12 @@ function create() {
         return;
     }
 
-    // Player setup (rocket)
+
     player = this.physics.add.sprite(400, 300, 'rocket').setCollideWorldBounds(true);
-    player.setDisplaySize(48, 56); // Doubled from 24, 28 to 48, 56
-    player.setDepth(5); // Ensure player appears above stars
+    player.setDisplaySize(48, 56);
+    player.setDepth(5); 
 
-    // Input
     cursors = this.input.keyboard.createCursorKeys();
-
-    // Add music toggle key during gameplay
     const mKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
     mKey.on('down', () => {
         toggleMusic();
@@ -533,10 +506,9 @@ function create() {
     // UI Elements
     createUI();
 
-    // Spawn initial star
+
     spawnRandomPill();
 
-    // Timers
     this.time.addEvent({
         delay: 3000,
         callback: spawnRandomPill,
@@ -550,7 +522,7 @@ function create() {
     });
 
     this.time.addEvent({
-        delay: 20000, // Increased from 12000 to 20000 (20 seconds)
+        delay: 20000, 
         callback: spawnTrap,
         loop: true
     });
@@ -650,7 +622,7 @@ function update() {
         gameScene.cameras.main.setRotation(0);
     }
 
-    // Move aliens toward player
+ 
     if (enemies && enemies.children) {
         enemies.children.entries.forEach(enemy => {
             if (!enemy.active) return;
@@ -661,13 +633,11 @@ function update() {
         });
     }
 
-    // Animate black holes with enhanced effects
+   
     if (traps && traps.children) {
         traps.children.entries.forEach(trap => {
             if (!trap.active) return;
 
-            // Basic rotation is handled in spawnTrap now
-            // Add gravitational pull effect on nearby objects
             const distanceToPlayer = Phaser.Math.Distance.Between(trap.x, trap.y, player.x, player.y);
             if (distanceToPlayer < 100) {
                 // Subtle gravitational pull on player
@@ -676,14 +646,13 @@ function update() {
                 player.x += Math.cos(angle) * pullStrength;
                 player.y += Math.sin(angle) * pullStrength;
 
-                // Visual distortion effect when player is near
+              
                 if (distanceToPlayer < 60) {
                     gameScene.cameras.main.shake(50, 0.002);
                 }
             }
 
-            // Pull in collectible stars if they're too close
-            if (pills && pills.children) {
+         if (pills && pills.children) {
                 pills.children.entries.forEach(pill => {
                     if (!pill.active) return;
                     const distanceToPill = Phaser.Math.Distance.Between(trap.x, trap.y, pill.x, pill.y);
@@ -693,7 +662,7 @@ function update() {
                         pill.x += Math.cos(angle) * pullStrength;
                         pill.y += Math.sin(angle) * pullStrength;
 
-                        // Destroy pill if it gets too close
+                   
                         if (distanceToPill < 25) {
                             pill.destroy();
                         }
@@ -704,7 +673,7 @@ function update() {
     }
 }
 
-// Spawning functions
+
 function spawnRandomPill() {
     if (!gameScene || !pills) return;
 
@@ -721,16 +690,16 @@ function spawnRandomPill() {
     const y = Phaser.Math.Between(50, 550);
 
     const starSprite = pills.create(x, y, star.sprite);
-    starSprite.setDisplaySize(50, 50); // Made larger for better visibility
+    starSprite.setDisplaySize(50, 50)
     starSprite.pillType = star.effect;
-    starSprite.setDepth(3); // Ensure collectible stars appear above background stars
-    starSprite.setAlpha(1.0); // Full opacity
+    starSprite.setDepth(3); 
+    starSprite.setAlpha(1.0); 
 
-    // Add a bright glow effect
+   
     const glow = gameScene.add.circle(x, y, 30, 0xffffff, 0.2);
     glow.setDepth(2);
 
-    // Make the glow follow the star
+
     gameScene.tweens.add({
         targets: glow,
         alpha: 0.1,
@@ -742,10 +711,8 @@ function spawnRandomPill() {
         ease: 'Sine.easeInOut'
     });
 
-    // Store glow reference to destroy it with the star
     starSprite.glowEffect = glow;
 
-    // Make stars pulse more noticeably
     gameScene.tweens.add({
         targets: starSprite,
         scaleX: 1.3,
@@ -756,7 +723,6 @@ function spawnRandomPill() {
         ease: 'Sine.easeInOut'
     });
 
-    // Add rotation
     gameScene.tweens.add({
         targets: starSprite,
         rotation: Math.PI * 2,
@@ -765,7 +731,6 @@ function spawnRandomPill() {
         ease: 'Linear'
     });
 
-    // Clean up glow when star is destroyed
     const originalDestroy = starSprite.destroy;
     starSprite.destroy = function () {
         if (this.glowEffect && this.glowEffect.active) {
@@ -785,9 +750,7 @@ function spawnEnemy() {
     enemy.setDisplaySize(30, 25);
     enemy.setCollideWorldBounds(true);
     enemy.setBounce(1);
-    enemy.setDepth(4); // Above stars but below player
-
-    // Remove enemy after 15 seconds
+    enemy.setDepth(4);
     gameScene.time.delayedCall(15000, () => {
         if (enemy && enemy.active) enemy.destroy();
     });
@@ -805,12 +768,10 @@ function spawnTrap() {
     trap.teleportCount = 0;
     trap.maxTeleports = Phaser.Math.Between(2, 4);
 
-    // Create gravitational distortion effect
+    
     const distortionField = gameScene.add.circle(x, y, 35, 0x4b0082, 0.1);
     distortionField.setDepth(1);
     trap.distortionField = distortionField;
-
-    // Create particle effects around the black hole
     const particles = [];
     for (let i = 0; i < 12; i++) {
         const particle = gameScene.add.circle(x, y, 2, 0x00ffff, 0.8);
@@ -818,8 +779,6 @@ function spawnTrap() {
         particles.push(particle);
     }
     trap.particles = particles;
-
-    // Animate gravitational field pulsing
     gameScene.tweens.add({
         targets: distortionField,
         scaleX: 1.5,
@@ -831,7 +790,6 @@ function spawnTrap() {
         ease: 'Sine.easeInOut'
     });
 
-    // Animate the black hole itself with multiple effects
     gameScene.tweens.add({
         targets: trap,
         scaleX: 1.2,
@@ -842,16 +800,15 @@ function spawnTrap() {
         ease: 'Sine.easeInOut'
     });
 
-    // Rotation with increasing speed
+ 
     let rotationSpeed = 0.03;
     const rotationTimer = gameScene.time.addEvent({
         delay: 100,
         callback: () => {
             if (trap && trap.active) {
                 trap.rotation += rotationSpeed;
-                rotationSpeed += 0.001; // Accelerating rotation
-
-                // Animate particles orbiting the black hole
+                rotationSpeed += 0.001; 
+               
                 particles.forEach((particle, index) => {
                     if (particle && particle.active) {
                         const angle = (index / particles.length) * Math.PI * 2 + trap.rotation * 2;
@@ -859,7 +816,7 @@ function spawnTrap() {
                         particle.x = trap.x + Math.cos(angle) * radius;
                         particle.y = trap.y + Math.sin(angle) * radius;
 
-                        // Particle flickering
+                        
                         particle.alpha = 0.5 + Math.sin(gameScene.time.now * 0.02 + index) * 0.3;
                     }
                 });
@@ -868,7 +825,6 @@ function spawnTrap() {
         loop: true
     });
 
-    // Teleportation system
     const teleportTimer = gameScene.time.addEvent({
         delay: Phaser.Math.Between(4000, 7000),
         callback: () => {
@@ -876,7 +832,7 @@ function spawnTrap() {
                 teleportBlackHole(trap);
                 trap.teleportCount++;
 
-                // Schedule next teleport with decreasing intervals
+              
                 teleportTimer.delay = Math.max(2000, teleportTimer.delay - 500);
                 teleportTimer.reset({
                     delay: teleportTimer.delay,
@@ -888,11 +844,10 @@ function spawnTrap() {
         loop: false
     });
 
-    // Store timers for cleanup
     trap.rotationTimer = rotationTimer;
     trap.teleportTimer = teleportTimer;
 
-    // Enhanced cleanup function
+   
     const originalDestroy = trap.destroy;
     trap.destroy = function () {
         if (this.distortionField && this.distortionField.active) {
@@ -908,20 +863,16 @@ function spawnTrap() {
         originalDestroy.call(this);
     };
 
-    // Remove black hole after extended time
     gameScene.time.delayedCall(25000, () => {
         if (trap && trap.active) trap.destroy();
     });
 }
 
-// New teleportation function
 function teleportBlackHole(blackHole) {
     if (!blackHole || !blackHole.active) return;
 
-    // Create dramatic teleport-out effect
+  
     gameScene.cameras.main.shake(200, 0.01);
-
-    // Implosion effect
     gameScene.tweens.add({
         targets: [blackHole, blackHole.distortionField],
         scaleX: 0,
@@ -929,8 +880,7 @@ function teleportBlackHole(blackHole) {
         alpha: 0,
         duration: 300,
         ease: 'Power2.easeIn',
-        onComplete: () => {
-            // Teleport to new position
+        onC
             const newX = Phaser.Math.Between(100, 700);
             const newY = Phaser.Math.Between(100, 500);
 
@@ -939,7 +889,6 @@ function teleportBlackHole(blackHole) {
                 blackHole.distortionField.setPosition(newX, newY);
             }
 
-            // Explosion effect at new location
             const explosionParticles = [];
             for (let i = 0; i < 16; i++) {
                 const angle = (i / 16) * Math.PI * 2;
@@ -953,7 +902,6 @@ function teleportBlackHole(blackHole) {
                 particle.setDepth(4);
                 explosionParticles.push(particle);
 
-                // Animate explosion particles
                 gameScene.tweens.add({
                     targets: particle,
                     x: newX + Math.cos(angle) * 60,
@@ -980,7 +928,7 @@ function teleportBlackHole(blackHole) {
                 onComplete: () => flash.destroy()
             });
 
-            // Restore black hole with dramatic entrance
+        
             gameScene.tweens.add({
                 targets: [blackHole, blackHole.distortionField],
                 scaleX: 1,
@@ -1000,9 +948,8 @@ function teleportBlackHole(blackHole) {
     });
 }
 
-// Game mechanics
 function collectPill(player, pill) {
-    playCollectSound(); // Add sound effect
+    playCollectSound(); 
     applyPillEffect(pill.pillType);
     pill.destroy();
     chaosLevel++;
@@ -1015,7 +962,7 @@ function collectPill(player, pill) {
 function applyPillEffect(type) {
     switch (type) {
         case 'blue':
-            // Hyperdrive boost + clear all effects
+       
             speedBoost += 150;
             dizzyEffect = 0;
             greenSpeedActive = false;
@@ -1024,7 +971,7 @@ function applyPillEffect(type) {
             break;
 
         case 'green':
-            // Warp speed + clear dizzy effect
+           
             greenSpeedActive = true;
             dizzyEffect = 0;
             chaosLevel = Math.max(1, chaosLevel - 0.5);
@@ -1033,7 +980,7 @@ function applyPillEffect(type) {
             break;
 
         case 'red':
-            // Navigation malfunction + space turbulence
+       
             dizzyEffect = 80;
             shakeAmount += 8;
             greenSpeedActive = false;
@@ -1043,7 +990,7 @@ function applyPillEffect(type) {
             break;
 
         case 'yellow':
-            // Quantum teleport + clear all effects
+        
             const x = Phaser.Math.Between(50, 750);
             const y = Phaser.Math.Between(50, 550);
             player.setPosition(x, y);
@@ -1055,7 +1002,7 @@ function applyPillEffect(type) {
             break;
 
         case 'purple':
-            // Cosmic disco + clear dizzy effect
+
             discoLights = 60;
             shakeAmount += 4;
             speedBoost += 75;
@@ -1078,13 +1025,10 @@ function hitEnemy(player, enemy) {
 }
 
 function hitTrap(player, trap) {
-    playTeleportSound(); // Add teleport sound effect
-
-    // Create dramatic teleportation effect
+    playTeleportSound();
     gameScene.cameras.main.flash(200, 138, 43, 226, false);
     gameScene.cameras.main.shake(300, 0.02);
 
-    // Player teleportation effect
     const playerTeleportEffect = gameScene.add.circle(player.x, player.y, 40, 0x8a2be2, 0.8);
     playerTeleportEffect.setDepth(10);
 
@@ -1098,12 +1042,11 @@ function hitTrap(player, trap) {
         onComplete: () => playerTeleportEffect.destroy()
     });
 
-    // Teleport player to random safe location
     const newX = Phaser.Math.Between(80, 720);
     const newY = Phaser.Math.Between(80, 520);
     player.setPosition(newX, newY);
 
-    // Create arrival effect at new position
+    
     const arrivalEffect = gameScene.add.circle(newX, newY, 60, 0xff6b35, 0.6);
     arrivalEffect.setDepth(10);
 
@@ -1117,7 +1060,6 @@ function hitTrap(player, trap) {
         onComplete: () => arrivalEffect.destroy()
     });
 
-    // Particle burst at arrival location
     for (let i = 0; i < 8; i++) {
         const angle = (i / 8) * Math.PI * 2;
         const particle = gameScene.add.circle(
@@ -1140,14 +1082,12 @@ function hitTrap(player, trap) {
         });
     }
 
-    // Apply negative effects
-    speedBoost -= 30; // Reduced penalty since teleportation can be helpful
-    chaosLevel += 0.3; // Reduced chaos increase
+    speedBoost -= 30;
+    chaosLevel += 0.3;
     shakeAmount += 4;
-    score -= 15; // Reduced score penalty
-    dizzyEffect += 20; // Add some disorientation after teleportation
+    score -= 15; 
+    dizzyEffect += 20; 
 
-    // Show teleportation message
     const teleportText = gameScene.add.text(newX, newY - 50, 'QUANTUM TELEPORT!', {
         fontSize: '16px',
         fill: '#00ffff',
@@ -1170,7 +1110,7 @@ function hitTrap(player, trap) {
 }
 
 function createUI() {
-    // Lives display
+    
     const livesLabel = gameScene.add.text(20, 20, '🚀 Lives:', {
         fontSize: '18px',
         fill: '#ffffff',
@@ -1185,7 +1125,6 @@ function createUI() {
     }).setDepth(10);
     livesValue.name = 'livesDisplay';
 
-    // Score display
     const scoreLabel = gameScene.add.text(20, 50, '⭐ Score:', {
         fontSize: '18px',
         fill: '#ffffff',
@@ -1200,7 +1139,6 @@ function createUI() {
     }).setDepth(10);
     scoreValue.name = 'scoreDisplay';
 
-    // Chaos level display
     const chaosLabel = gameScene.add.text(20, 80, '🌪 Chaos:', {
         fontSize: '18px',
         fill: '#ffffff',
@@ -1215,7 +1153,6 @@ function createUI() {
     }).setDepth(10);
     chaosValue.name = 'chaosDisplay';
 
-    // Survival timer display
     const timerLabel = gameScene.add.text(200, 20, '⏱ Time:', {
         fontSize: '18px',
         fill: '#ffffff',
@@ -1230,7 +1167,6 @@ function createUI() {
     }).setDepth(10);
     timerValue.name = 'timerDisplay';
 
-    // Stars collected display
     const starsLabel = gameScene.add.text(200, 50, '⭐ Stars:', {
         fontSize: '18px',
         fill: '#ffffff',
@@ -1245,7 +1181,6 @@ function createUI() {
     }).setDepth(10);
     starsValue.name = 'starsDisplay';
 
-    // Speed indicator
     const speedLabel = gameScene.add.text(200, 80, '🚀 Speed:', {
         fontSize: '18px',
         fill: '#ffffff',
@@ -1270,13 +1205,11 @@ function loseLife(message) {
         // Flash screen and continue
         gameScene.cameras.main.flash(500, 255, 0, 0);
 
-        // Reset some stats but keep playing
         chaosLevel = Math.max(1, chaosLevel - 2);
         survivalTimer = 0;
         speedBoost = 0;
         dizzyEffect = 0;
 
-        // Show life lost message briefly
         const lostLifeText = gameScene.add.text(400, 300, `Hull Breach! ${lives} lives remaining`, {
             fontSize: '24px',
             fill: '#ff0000',
@@ -1344,7 +1277,7 @@ function gameOver(message) {
         fontFamily: 'Courier New'
     }).setOrigin(0.5).setDepth(20);
 
-    // Pulsing effect on play again text
+  
     gameScene.tweens.add({
         targets: playAgainText,
         alpha: 0.3,
@@ -1361,7 +1294,7 @@ function gameOver(message) {
 }
 
 function updateUI() {
-    // Find and update display elements by name
+   
     const livesDisplay = gameScene.children.getByName('livesDisplay');
     const scoreDisplay = gameScene.children.getByName('scoreDisplay');
     const chaosDisplay = gameScene.children.getByName('chaosDisplay');
@@ -1424,7 +1357,6 @@ function updateUI() {
         speedDisplay.setFill(speedColor);
     }
 
-    // Legacy DOM element updates (if they exist)
     const livesElement = document.getElementById('lives');
     const scoreElement = document.getElementById('score');
     const chaosElement = document.getElementById('chaos');
@@ -1460,7 +1392,6 @@ function resetGame() {
     }
 }
 
-// Game configuration
 const config = {
     type: Phaser.AUTO,
     width: 800,
@@ -1481,5 +1412,4 @@ const config = {
     }
 };
 
-// Initialize the game
 const game = new Phaser.Game(config);
