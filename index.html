@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>High on Stars</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.70.0/phaser.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <h1 class="title">🚀SHOOT FOR THE STARS⭐</h1>
+  <p><B style="color: crimson;">YOU NEED TO CONSUME STARS TO SURVIVE, HOWEVER THE MORE STARS YOU CONSUME-- IT GETS HARDER TO SURVIVE</B></p>
+
+  <div id="game-container"></div>
+
+  <div id="ui">
+    <div class="stat">🚀 Lives: <span id="lives">3</span></div>
+    <div class="stat">⭐ Score: <span id="score">0</span></div>
+    <div class="stat">🌪 Chaos: <span id="chaos">1</span></div>
+    <div class="stat">⏱ Timer: <span id="timer">0</span></div>
+    <div class="stat">🌟 Stars: <span id="pills">0</span></div>
+  </div>
+
+  <div class="instructions">
+    <h3>🎮 Controls</h3>
+    <p>Arrow Keys: Navigate your rocket</p>
+    <p>Collect stars to survive and gain power-ups</p>
+    <p>Avoid aliens and black holes</p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+
+</html>
